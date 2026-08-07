@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Calculator</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <main class="page">
+    <section class="card">
+      <a class="back-link" href="index.html">← Back to Home</a>
+      <span class="badge">Advanced Module</span>
+      <h1>Advanced Calculator</h1>
+      <p class="subtitle">Use power and modulo operations from <code>scripts/advanced.js</code>.</p>
+
+      <form class="form-grid" onsubmit="calculate(); return false;">
+        <div class="form-row-inline">
+          <div class="form-row">
+            <label for="x">First Value (x)</label>
+            <input type="number" id="x" placeholder="Enter x" step="any" required />
+          </div>
+          <div class="form-row">
+            <label for="n">Second Value (n)</label>
+            <input type="number" id="n" placeholder="Enter n" step="any" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label for="op">Operation</label>
+          <select id="op">
+            <option value="pow">Power (x^n)</option>
+            <option value="modulo">Modulo (x % n)</option>
+          </select>
+        </div>
+
+        <button class="btn" type="submit">Calculate</button>
+      </form>
+
+      <div id="result" class="result-box">Enter values and click Calculate.</div>
+    </section>
+  </main>
+
+  <script src="scripts/advanced.js"></script>
+  <script>
+    function calculate() {
+      const resultBox = document.getElementById("result");
+      const x = Number(document.getElementById("x").value);
+      const n = Number(document.getElementById("n").value);
+      const op = document.getElementById("op").value;
+
+      if (!window.advanced) {
+        resultBox.className = "result-box error";
+        resultBox.textContent = "Error: Advanced calculator module failed to load.";
+        return;
+      }
+
+      try {
+        const result = window.advanced[op](x, n);
+        resultBox.className = "result-box success";
+        resultBox.innerHTML =
+          '<span class="result-label">Result</span><span class="result-value">' + result + "</span>";
+      } catch (error) {
+        resultBox.className = "result-box error";
+        resultBox.textContent = "Error: " + error.message;
+      }
+    }
+  </script>
+</body>
+</html>

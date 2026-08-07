@@ -1,0 +1,26 @@
+{
+  "name": "calculator",
+  "version": "1.0.0",
+  "description": "Calculator web app with integration tests and CI",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest",
+     "test:unit": "jest test/basic.test.js test/advanced.test.js test/custom.test.js",
+    "test:integration": "jest test/integration.test.js"
+  },
+  "jest": {
+    "testMatch": ["**/test/**/*.test.js"],
+    "collectCoverage": true,
+    "coverageDirectory": "./coverage"
+  },
+   
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "jest": "^30.4.2"
+  }
+}

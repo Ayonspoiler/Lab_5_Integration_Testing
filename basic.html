@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic Calculator</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <main class="page">
+    <section class="card">
+      <a class="back-link" href="index.html">← Back to Home</a>
+      <span class="badge">Basic Module</span>
+      <h1>Basic Calculator</h1>
+      <p class="subtitle">Perform fundamental arithmetic operations using <code>scripts/basic.js</code>.</p>
+
+      <form class="form-grid" onsubmit="calculate(); return false;">
+        <div class="form-row-inline">
+          <div class="form-row">
+            <label for="a">First Number</label>
+            <input type="number" id="a" placeholder="Enter first number" step="any" required />
+          </div>
+          <div class="form-row">
+            <label for="b">Second Number</label>
+            <input type="number" id="b" placeholder="Enter second number" step="any" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label for="op">Operation</label>
+          <select id="op">
+            <option value="add">Add (+)</option>
+            <option value="subtract">Subtract (−)</option>
+            <option value="multiply">Multiply (×)</option>
+            <option value="divide">Divide (÷)</option>
+          </select>
+        </div>
+
+        <button class="btn" type="submit">Calculate</button>
+      </form>
+
+      <div id="result" class="result-box">Enter values and click Calculate.</div>
+    </section>
+  </main>
+
+  <script src="scripts/basic.js"></script>
+  <script>
+    function calculate() {
+      const resultBox = document.getElementById("result");
+      const a = Number(document.getElementById("a").value);
+      const b = Number(document.getElementById("b").value);
+      const op = document.getElementById("op").value;
+
+      if (!window.basic) {
+        resultBox.className = "result-box error";
+        resultBox.textContent = "Error: Basic calculator module failed to load.";
+        return;
+      }
+
+      try {
+        const result = window.basic[op](a, b);
+        resultBox.className = "result-box success";
+        resultBox.innerHTML =
+          '<span class="result-label">Result</span><span class="result-value">' + result + "</span>";
+      } catch (error) {
+        resultBox.className = "result-box error";
+        resultBox.textContent = "Error: " + error.message;
+      }
+    }
+  </script>
+</body>
+</html>

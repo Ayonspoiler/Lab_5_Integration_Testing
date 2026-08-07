@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compound Interest Calculator</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <main class="page">
+    <section class="card card-wide">
+      <a class="back-link" href="index.html">← Back to Home</a>
+      <span class="badge">Custom Module</span>
+      <h1>Compound Interest Calculator</h1>
+      <p class="subtitle">
+        This page integrates both calculator modules to compute compound interest:
+        <code>A = P × (1 + r/n)<sup>nt</sup></code>
+      </p>
+
+      <form class="form-grid" onsubmit="calculate(); return false;">
+        <div class="form-row-inline">
+          <div class="form-row">
+            <label for="principal">Principal Amount</label>
+            <input type="number" id="principal" value="1000" min="0.01" step="any" required />
+          </div>
+          <div class="form-row">
+            <label for="rate">Annual Rate (%)</label>
+            <input type="number" id="rate" value="10" min="0" step="any" required />
+          </div>
+        </div>
+
+        <div class="form-row-inline">
+          <div class="form-row">
+            <label for="years">Years</label>
+            <input type="number" id="years" value="2" min="0" step="any" required />
+          </div>
+          <div class="form-row">
+            <label for="n">Compounds Per Year</label>
+            <input type="number" id="n" value="2" min="1" step="1" required />
+          </div>
+        </div>
+
+        <button class="btn" type="submit">Calculate Interest</button>
+      </form>
+
+      <div id="result" class="result-box">Enter values and click Calculate Interest.</div>
+    </section>
+  </main>
+
+  <script src="scripts/basic.js"></script>
+  <script src="scripts/advanced.js"></script>
+  <script src="scripts/custom.js"></script>
+  <script>
+    function calculate() {
+      const resultBox = document.getElementById("result");
+      const principal = Number(document.getElementById("principal").value);
+      const rate = Number(document.getElementById("rate").value);
+      const years = Number(document.getElementById("years").value);
+      const compoundsPerYear = Number(document.getElementById("n").value);
+
+      if (!window.custom || !window.custom.compoundInterest) {
+        resultBox.className = "result-box error";
+        resultBox.textContent =
+          "Error: Custom calculator module failed to load. Check that scripts/basic.js, scripts/advanced.js, and scripts/custom.js loaded correctly.";
+        return;
+      }
+
+      try {
+        const { amount, interest } = window.custom.compoundInterest(
+          principal,
+          rate,
+          years,
+          compoundsPerYear
+        );
+
+        resultBox.className = "result-box success";
+        resultBox.innerHTML =
+          '<div class="result-grid">' +
+          '<div><span class="result-label">Final Amount</span><span class="result-value">$' +
+          amount.toFixed(2) +
+          "</span></div>" +
+          '<div><span class="result-label">Interest Earned</span><span class="result-value">$' +
+          interest.toFixed(2) +
+          "</span></div>" +
+          "</div>";
+      } catch (error) {
+        resultBox.className = "result-box error";
+        resultBox.textContent = "Error: " + error.message;
+      }
+    }
+  </script>
+</body>
+</html>
