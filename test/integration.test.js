@@ -53,7 +53,7 @@ describe("Stub Integration Test", () => {
 });
 
 describe("Driver Integration Test", () => {
-  // Driver: test harness that invokes custom module directly (no HTML/UI)
+ 
   function customCalculatorDriver(principal, rate, years, n = 1) {
     return custom.compoundInterest(principal, rate, years, n);
   }
